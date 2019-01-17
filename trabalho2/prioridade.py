@@ -1,18 +1,18 @@
-import threading
-import time
-import timeit
+# import threading
+# import time
+# import timeit
 from random import randint
 import random
 import string
-import pprint
+# import pprint
 
-QTD_PALAVRAS = 3
-# ID = 0
+QTD_PALAVRAS = 5
 
 class Palavras(object):
     def __init__(self):
         self.caracteres = ""
         self.id = 0
+        self.prioridade = 0
 
 
 # ----------------------------------------funções auxliares---------------------------------------- #
@@ -30,12 +30,10 @@ def remover_primeiro_caracter(palavra):
     return palavra
 
 
-# ----------------------------------------funções auxliares---------------------------------------- #
+# -----------------------------------------------função-------------------------------------------- #
 
 
-#Round robin da prioridade igual a todos os processos. 
-#Cada processo é executado em uma mesma quantidade de tempo em uma lista circular
-def round_robin(palavras = [Palavras()]):
+def prioridade(palavras = [Palavras()]):
     print("-----------------------------")
     while len(palavras) > 0:
         palavra = palavras.pop(0)
@@ -55,6 +53,7 @@ def main():
         palavra.caracteres = gerar_palavra(randint(1,10))
         palavra.id = id
         id = id-1
+        palavra.prioridade = randint(1,3)
         palavras.append(palavra)
     palavras.reverse()
     
@@ -65,8 +64,8 @@ def main():
     print("Palavras geradas:")
     imprimir_palavras(palavras)
     
-    # -----------------------------------------Round Robin-------------------------------------------- #
-    round_robin(palavras)
+    # ------------------------------------------Prioridade-------------------------------------------- #
+    # prioridade(palavras)
 
 	
 
