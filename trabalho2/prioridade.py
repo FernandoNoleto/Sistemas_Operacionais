@@ -20,7 +20,7 @@ class Palavras(object):
 
 def imprimir_palavras(palavras = [Palavras()]):
     for p in palavras:
-        print("id: {} -> {}".format(p.id, p.caracteres))
+        print("id: {} -> {} -> prioridade: {}".format(p.id, p.caracteres, p.prioridade))
 
 def gerar_palavra(size, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for _ in range(size))
@@ -33,15 +33,26 @@ def remover_primeiro_caracter(palavra):
 # -----------------------------------------------função-------------------------------------------- #
 
 
+#O algoritmo estabelece uma prioridade para um processo
+#Aquele algoritmo que tem prioridade maior é executado primeiro
 def prioridade(palavras = [Palavras()]):
     print("-----------------------------")
+    maior_prioridade_atual = 0
+    palavra_atual = Palavras()
+    
     while len(palavras) > 0:
-        palavra = palavras.pop(0)
-        print("id: {} -> {}".format(palavra.id, palavra.caracteres))
-        palavra.caracteres = remover_primeiro_caracter(palavra.caracteres)
-        if len(palavra.caracteres) > 0:
-            palavras.append(palavra)
+        maior_prioridade_atual = 0
+        for palavra in palavras:
+            if palavra.prioridade > maior_prioridade_atual:
+                maior_prioridade_atual = palavra.prioridade
             
+        for palavra in palavras:
+            if palavra.prioridade == maior_prioridade_atual:
+                palavra_atual = palavra
+                palavras.remove(palavra)
+                while len(palavra_atual.caracteres) > 0:
+                    print("id: {} -> {}".format(palavra_atual.id, palavra_atual.caracteres))
+                    palavra_atual.caracteres = remover_primeiro_caracter(palavra_atual.caracteres)
 
 def main():
 
@@ -65,7 +76,7 @@ def main():
     imprimir_palavras(palavras)
     
     # ------------------------------------------Prioridade-------------------------------------------- #
-    # prioridade(palavras)
+    prioridade(palavras)
 
 	
 
