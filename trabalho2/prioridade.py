@@ -1,6 +1,6 @@
-# import threading
-# import time
-# import timeit
+import threading
+import time
+import timeit
 from random import randint
 import random
 import string
@@ -76,7 +76,12 @@ def main():
     imprimir_palavras(palavras)
     
     # ------------------------------------------Prioridade-------------------------------------------- #
+    
+    inicio = time.time()
     prioridade(palavras)
+    fim = time.time()
+    time.sleep(0.5)
+    print("Tempo de execucao Prioridade: {} ms".format((fim-inicio)*1000))
 
 	
 

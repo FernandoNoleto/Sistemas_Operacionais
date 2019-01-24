@@ -1,6 +1,6 @@
-# import threading
-# import time
-# import timeit
+import threading
+import time
+import timeit
 from random import randint
 import random
 import string
@@ -82,12 +82,17 @@ def main():
     print("Palavras geradas:")
     imprimir_palavras(palavras)
     
-    # -----------------------------------------Round Robin-------------------------------------------- #
+    # --------------------------------------------Garantido------------------------------------------- #
     quantum = int(input("Quantidade de quantuns?"))
     # print(quantum)
+    
+    
+    inicio = time.time()
     garantido(quantum, palavras)
+    fim = time.time()
+    time.sleep(0.5)
+    print("Tempo de execucao Garantido: {} ms".format((fim-inicio)*1000))
 
-	
 
 
 

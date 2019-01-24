@@ -1,9 +1,12 @@
+import threading
+import time
+import timeit
 from random import randint
 import random
 from random import shuffle
 import string
 
-QTD_PALAVRAS = 5
+QTD_PALAVRAS = 10
 
 class Palavras(object):
     def __init__(self):
@@ -61,11 +64,14 @@ def main():
     print("Palavras geradas:")
     imprimir_palavras(palavras)
 
-    # -----------------------------------------Round Robin-------------------------------------------- #
+    # ------------------------------------------Fair-Share-------------------------------------------- #
     
+    
+    inicio = time.time()
     fair_share(palavras)
-
-	
+    fim = time.time()
+    time.sleep(0.5)
+    print("Tempo de execucao Fair-Share: {} ms".format((fim-inicio)*1000))
 
 
 

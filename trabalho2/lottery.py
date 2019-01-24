@@ -1,3 +1,6 @@
+import threading
+import time
+import timeit
 from random import randint
 import random
 from random import shuffle
@@ -73,18 +76,14 @@ def main():
     print("Palavras geradas:")
     imprimir_palavras(palavras)
 
-    # palavras.pop(0)
-    # palavras.pop(1)
-    # palavras.pop(2)
-    # palavras.pop(3)
-    # palavras.pop(4)
-    # for i in range(QTD_PALAVRAS):
-    #     palavras.pop(0)
     
-    # -----------------------------------------Round Robin-------------------------------------------- #
+    # --------------------------------------------Lottery-------------------------------------------- #
     
+    inicio = time.time()
     lottery(palavras)
-
+    fim = time.time()
+    time.sleep(0.5)
+    print("Tempo de execucao Lottery: {} ms".format((fim-inicio)*1000))
 	
 
 

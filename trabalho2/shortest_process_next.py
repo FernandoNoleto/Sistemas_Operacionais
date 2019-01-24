@@ -1,6 +1,6 @@
-# import threading
-# import time
-# import timeit
+import threading
+import time
+import timeit
 from random import randint
 import random
 import string
@@ -85,8 +85,13 @@ def main():
     _palavras = organizar_por_menor_tamanho(palavras)
     # imprimir_palavras(_palavras)
     
-    # ------------------------------------------Prioridade-------------------------------------------- #
+    # --------------------------------------Shortest Process Next------------------------------------- #
+
+    inicio = time.time()
     shortest_process_next(_palavras)
+    fim = time.time()
+    time.sleep(0.5)
+    print("Tempo de execucao Shortest Process Next: {} ms".format((fim-inicio)*1000))
 
 	
 

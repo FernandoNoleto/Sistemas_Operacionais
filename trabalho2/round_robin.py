@@ -1,6 +1,6 @@
-# import threading
-# import time
-# import timeit
+import threading
+import time
+import timeit
 from random import randint
 import random
 import string
@@ -65,7 +65,13 @@ def main():
     imprimir_palavras(palavras)
     
     # -----------------------------------------Round Robin-------------------------------------------- #
+    
+    inicio = time.time()
     round_robin(palavras)
+    fim = time.time()
+    time.sleep(0.5)
+    print("Tempo de execucao Round Robin: {} ms".format((fim-inicio)*1000))
+    
 
 	
 
