@@ -6,7 +6,7 @@ import random
 import string
 # import pprint
 
-QTD_PALAVRAS = 5
+QTD_PALAVRAS = 15
 
 class Palavras(object):
     def __init__(self):

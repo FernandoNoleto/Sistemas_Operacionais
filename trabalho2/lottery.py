@@ -6,7 +6,7 @@ import random
 from random import shuffle
 import string
 
-QTD_PALAVRAS = 5
+QTD_PALAVRAS = 15
 
 class Palavras(object):
     def __init__(self):
