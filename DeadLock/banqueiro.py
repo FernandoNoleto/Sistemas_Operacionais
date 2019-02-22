@@ -41,7 +41,7 @@ def imprimir_palavras(palavras = [Palavras()]):
     for p in palavras:
         print("id: {} -> {}; mem:{}; proc:{}; hd:{}".format(p.id, p.caracteres, p.mem_necessario, p.pro_necessario, p.hd_necessario))
 
-def imprimir_recursos(recursos = Recurso()):
+def imprimir_recursos():
     print("memoria: {}gb; processador: {}%; hd: {}gb".format(recursos.memoria_total, recursos.processador_total, recursos.disco_total))
         
 
@@ -58,74 +58,75 @@ def remover_primeiro_caracter(palavra):
 
 
 
-def banqueiro(palavras = [Palavras()]):
+def banqueiro():
     
-    while(len(palavras) > 0):
+    while(len(FILA_DE_ESPERA) > 0):
         alocou = False
-        for p in palavras:
-            thread = Thread(target = executar_processo, args = (p, ))
+        for p in FILA_DE_ESPERA:
+            # print("recursos.memoria_total {}".format(recursos.memoria_total))
+            # print("recursos.mem_alocada {}".format(recursos.mem_alocada))
+
             mem_disponivel = recursos.memoria_total - recursos.mem_alocada
+            print("Memoria disponivel",format(mem_disponivel))
 
             if(p.mem_necessario <= mem_disponivel): #Se a memoria necessaria <= memoria disponivel
-                recursos.mem_alocada = recursos.mem_alocada + p.mem_necessario #aloco a memoria para o processo                
-                print("Processo de ID: {} -> {} alocou {}mb de memoria".format(p.id, p.caracteres, p.mem_necessario))
-                print("Memoria restante: {}".format(recursos.memoria_total - recursos.mem_alocada))
+                recursos.mem_alocada = recursos.mem_alocada + p.mem_necessario #aloco a memoria para o processo 
+                # print("recursos.mem_alocada",format(recursos.mem_alocada))               
+                print("Processo de ID: {} -> \"{}\" alocou {}mb de memoria".format(p.id, p.caracteres, p.mem_necessario))
+                print("Memoria restante: {}gb".format(recursos.memoria_total - recursos.mem_alocada))
                 print("----------------------------------------------------------")
-                alocou = True
-                palavras.remove(p) #Tiro o processo da lista de execução
+                # sleep(0.1)
+                # print("Processo de ID: {} -> {} executou!".format(p.id, p.caracteres))
+
+                # recursos.mem_alocada = recursos.mem_alocada - p.mem_necessario 
+                # recursos.mem_alocada = 0
+                # print(recursos.mem_alocada)
+                # recursos.mem_alocada = recursos.mem_alocada - p.mem_necessario 
+                FILA_DE_ESPERA.remove(p) #Tiro o processo da lista de execução
+                # thread = Thread(target = executar_processo, args = (p, ))
+                # recursos.memoria_total += p.mem_necessario
                 
             else:
                 print("Processo de ID: {} -> {} não alocou memoria e será colocado na lista de espera".format(p.id, p.caracteres))
                 print("Memoria necessária para alocar: {}".format(p.mem_necessario))
-                print("Memoria disponivel: {}".format(recursos.memoria_total - recursos.mem_alocada))
+                print("Memoria disponivel: {}gb".format(recursos.memoria_total - recursos.mem_alocada))
                 print("----------------------------------------------------------")
-                thread.start()
-                thread.join()
-                #libero o espaço alocado e devolvo para a memoria_total
-                # recursos.mem_alocada = recursos.mem_alocada - p.mem_necessario 
-                # recursos.memoria_total += p.mem_necessario
-                
-                FILA_DE_ESPERA.append(p)
-                
+              
+        sleep(0.1)
+        print("Processo de ID: {} -> \"{}\" executou!".format(p.id, p.caracteres))
 
-            # removido = p
-            
-            # palavras.remove(p) #Tiro o processo da lista de execução
-            # if(alocou):
-            #     recursos = adicionar_na_lista_de_executados(removido, recursos)
-            
-            # if(len(PROCESSOS_JA_EXECUTADOS) == QTD_PALAVRAS):
-            #     return
-            
+        recursos.mem_alocada = recursos.mem_alocada - p.mem_necessario 
             
             
 
 def executar_processo(processo = Palavras()):
-    print ("Processo de ID {} -> {}".format(processo.id, processo.caracteres))
+    print ("Processo de ID {} -> \"{}\" -- Executando!".format(processo.id, processo.caracteres))
     for i in range(len(processo.caracteres)):
-        sleep(0.5)
-    print ("Processo de ID {} -> {} -- Finalizado!".format(processo.id, processo.caracteres))
+        sleep(0.1)
+    print ("Processo de ID {} -> \"{}\" -- Finalizado!".format(processo.id, processo.caracteres))
     recursos.mem_alocada = recursos.mem_alocada - processo.mem_necessario 
-    recursos.memoria_total += processo.mem_necessario
+    # recursos.mem_alocada = recursos.mem_alocada - processo.mem_necessario 
+    # recursos.memoria_total += processo.mem_necessario
+    # FILA_DE_ESPERA.remove(processo)
     # return processo
 
 
 
 
-def adicionar_na_lista_de_executados(removido = Palavras()):
+# def adicionar_na_lista_de_executados(removido = Palavras()):
     
-    thread = Thread(target = executar_processo, args = (removido, ))
-    thread.start()
-    thread.join()
-    print("----------------------------------------------------------")
-    PROCESSOS_JA_EXECUTADOS.append(removido)
-    #libero o espaço alocado e devolvo para a memoria_total
-    recursos.mem_alocada = recursos.mem_alocada - removido.mem_necessario 
-    recursos.memoria_total += removido.mem_necessario
-    return recursos
+#     thread = Thread(target = executar_processo, args = (removido, ))
+#     thread.start()
+#     thread.join()
+#     print("----------------------------------------------------------")
+#     PROCESSOS_JA_EXECUTADOS.append(removido)
+#     #libero o espaço alocado e devolvo para a memoria_total
+#     recursos.mem_alocada = recursos.mem_alocada - removido.mem_necessario 
+#     recursos.memoria_total += removido.mem_necessario
+#     return recursos
 
-    # if(len(PROCESSOS_JA_EXECUTADOS) == QTD_PALAVRAS):
-    #     return
+#     # if(len(PROCESSOS_JA_EXECUTADOS) == QTD_PALAVRAS):
+#     #     return
             
             
             
@@ -151,6 +152,7 @@ if __name__ == "__main__":
     # ----------------------------------------------------------------------------------------------- #
 
     # recursos_disponiveis = Recurso()
+    FILA_DE_ESPERA = palavras
 
 
     # ------------------------------------------------------------------------------------------------- #
@@ -158,18 +160,23 @@ if __name__ == "__main__":
     
     
     # ----------------------------------------Palavras Geradas---------------------------------------- #
-    print("--------------------------------------")
+    print("----------------------------------------------------------")
     print("Palavras geradas:")
-    imprimir_palavras(palavras)
+    imprimir_palavras(FILA_DE_ESPERA)
 
     # -------------------------------------Recursos Disponiveis--------------------------------------- #
 
-    print("--------------------------------------")
+    print("----------------------------------------------------------")
+    print("----------------------------------------------------------")
     print("Recursos Disponiveis:")
     imprimir_recursos()
 
+
     # ------------------------------------Algoritmo do Banqueiro-------------------------------------- #
 
-    print("-----------------------------")
-    banqueiro(palavras)
-    # print(status)
+    print("----------------------------------------------------------")
+    print("----------------------------------------------------------")
+    banqueiro()
+    
+    # print(recursos.memoria_total)
+    # print(recursos.mem_alocada)
